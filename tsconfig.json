@@ -39,6 +39,7 @@
     "app/**/*.tsx",
     "app/**/*.ts",
     "components/**/*.tsx",
+    "hooks/**/*.ts",
     "lib/**/*.ts",
     "lib/**/*.tsx",
     "scripts/**/*.ts",

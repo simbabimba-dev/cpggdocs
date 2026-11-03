@@ -139,6 +139,26 @@
   --color-fd-error: #f87171;
 }
 
+/*
+ * Landing surface aliases.
+ * The marketing page shares the docs theme: these read the same `--color-fd-*`
+ * tokens the docs use, so the landing can never drift into its own palette
+ * (light and dark both). Only the ASCII measurement vars are landing-specific.
+ */
+:root {
+  --landing-background: var(--color-fd-background);
+  --landing-foreground: var(--color-fd-foreground);
+  --landing-muted: var(--color-fd-muted-foreground);
+  --landing-ascii-size: clamp(3.3px, 1.16vw, 15px);
+  --landing-rail-width: clamp(8px, 1.2vw, 20px);
+}
+
+@media (max-width: 480px) {
+  :root {
+    --landing-ascii-size: clamp(3.2px, 1.12vw, 5.4px);
+  }
+}
+
 .dark #nd-sidebar {
   --color-fd-card: #16171b;
   --color-fd-muted: #1c1d22;

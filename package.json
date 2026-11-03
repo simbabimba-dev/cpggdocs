@@ -15,19 +15,25 @@
     "gg:run": "MESSAGE=updated bun scripts/gg/repackage.ts"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.2",
     "@phosphor-icons/react": "^2.1.10",
+    "@react-three/drei": "10.7.9",
+    "@react-three/fiber": "9.8.2",
     "@tailwindcss/postcss": "4.3.3",
     "cn": "^0.4.0",
     "fumadocs-core": "16.16.2",
     "fumadocs-mdx": "15.4.6",
     "fumadocs-openapi": "12.4.2",
     "fumadocs-ui": "16.16.2",
+    "gsap": "^3.15.0",
     "json-schema-typed": "^8.0.2",
     "lucide-react": "1.52.0",
     "next": "16.4.3",
+    "ogl": "^1.0.11",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "tailwindcss": "4.3.3",
+    "three": "0.187.0",
     "yaml": "2.9.1"
   },
   "devDependencies": {
@@ -36,6 +42,7 @@
     "@types/node": "24.19.1",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
+    "@types/three": "0.187.0",
     "bun": "1.4.2",
     "typescript": "5.9.3"
   }
