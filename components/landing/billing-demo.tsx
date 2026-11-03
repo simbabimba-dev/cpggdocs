@@ -86,8 +86,10 @@ export function BillingDemo() {
 						<span className="text-2xl leading-none font-semibold tracking-tight tabular-nums">{money(price)}</span>
 					</div>
 					<p className="mt-2 text-[13px] leading-relaxed text-fd-muted-foreground">
-						Next invoice {cycle.next}. Wallet covers {covered.toLocaleString('en-US')}{' '}
-						{covered === 1 ? 'cycle' : 'cycles'}.
+						Next invoice {cycle.next}.{' '}
+						{covered === 0
+							? 'The wallet does not cover this cycle yet.'
+							: `Wallet covers ${covered.toLocaleString('en-US')} ${covered === 1 ? 'cycle' : 'cycles'}.`}
 					</p>
 					<div className="mt-3 flex items-center gap-2">
 						<Wallet className="size-3.5 text-fd-muted-foreground" aria-hidden="true" />
