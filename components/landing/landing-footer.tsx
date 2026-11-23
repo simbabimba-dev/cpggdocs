@@ -28,7 +28,7 @@ export function LandingFooter() {
         <a href="/" aria-label="CtrlPanel.gg home" className="flex max-w-full justify-center outline-offset-8 focus-visible:outline-2 focus-visible:outline-[#27a9e1] [--landing-ascii-size:clamp(4.2px,1vw,12px)]">
           <AsciiTechWordmark />
         </a>
-        <h2 className="m-0 mb-3 mt-1 text-2xl font-medium tracking-[-.03em] max-sm:text-xl">Make it yours.</h2>
+        <h2 className="m-0 mb-3 mt-6 text-2xl font-medium tracking-[-.03em] max-sm:text-xl">Make it yours.</h2>
         <div className="flex flex-wrap justify-center gap-3">
           <Link href="/docs/getting-started/install" className={landingButtonClass}>
             <PillButtonContent><span>Install CtrlPanel</span></PillButtonContent>
@@ -54,7 +54,7 @@ export function LandingFooter() {
       </nav>
 
       <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-2 border-t border-dashed border-[color-mix(in_srgb,var(--landing-foreground)_25%,transparent)] px-7 py-4 font-mono text-[10px] leading-relaxed text-[var(--landing-muted)] max-sm:px-5">
-          <p className="m-0">© {new Date().getFullYear()} CtrlPanel.gg (Design by <a href="https://nadhi.dev"><u>Nadhi.dev</u></a> and <u>Simba)</u> · Made with love ❤️</p>
+          <p className="m-0">© {new Date().getFullYear()} CtrlPanel.gg (Design by <a href="https://nadhi.dev"><u>Nadhi.dev</u></a> and <u>Simba)</u> · Made with love</p>
         <p className="m-0">CtrlPanel.gg is not affiliated with Discord.</p>
       </div>
       </div>

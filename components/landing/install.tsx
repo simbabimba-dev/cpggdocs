@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import { ArrowRight, ArrowUpRight, Boxes, Check, Clock, Database, Server, Terminal } from 'lucide-react';
-import { buttonVariants } from '@/components/ui/button';
+import { PillButtonContent } from '@/components/react-bits/PillButtonContent';
 import { Section } from '@/components/landing/section';
 import { AppWindow, Pill, uiLabelClass } from '@/components/landing/app-ui';
 import { actionRowClass, bodyClass, metaClass, monoClass, splitClass } from '@/components/landing/foundation';
+import { landingButtonClass, landingButtonSecondaryClass } from '@/components/landing/landing-styles';
 import { cn } from '@/lib/utils';
 
 /**
@@ -99,26 +100,32 @@ export function Install() {
 			</div>
 
 			<div className={cn(actionRowClass, 'pt-2')} data-reveal>
-				<Link href="/docs/getting-started/install/" className={buttonVariants({ variant: 'primary' })}>
-					<ArrowRight aria-hidden="true" className="size-4" />
-					<span>Read the install guide</span>
+				<Link href="/docs/getting-started/install/" className={landingButtonClass}>
+					<PillButtonContent>
+						<ArrowRight aria-hidden="true" />
+						<span>Read the install guide</span>
+					</PillButtonContent>
 				</Link>
 				<a
 					href="https://demo.ctrlpanel.gg"
 					target="_blank"
 					rel="noopener noreferrer"
-					className={buttonVariants({ variant: 'outline' })}
+					className={landingButtonSecondaryClass}
 				>
-					<ArrowUpRight aria-hidden="true" className="size-4" />
-					<span>Try the live demo</span>
+					<PillButtonContent>
+						<ArrowUpRight aria-hidden="true" />
+						<span>Try the live demo</span>
+					</PillButtonContent>
 				</a>
 				<a
 					href="https://discord.gg/ctrlpanel-gg-787829714483019826"
 					target="_blank"
 					rel="noopener noreferrer"
-					className={buttonVariants({ variant: 'outline' })}
+					className={landingButtonSecondaryClass}
 				>
-					<span>Join Discord</span>
+					<PillButtonContent>
+						<span>Join Discord</span>
+					</PillButtonContent>
 				</a>
 			</div>
 		</Section>

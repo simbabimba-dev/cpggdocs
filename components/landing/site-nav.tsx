@@ -4,11 +4,22 @@ import { useCallback, useEffect, useId, useRef, useState, type ReactNode } from 
 import Link from 'next/link';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { Menu, X } from 'lucide-react';
+import { ChevronDown, Menu, X } from 'lucide-react';
 import { useHomeLayout } from 'fumadocs-ui/layouts/home';
+import { useTheme } from 'next-themes';
 import { Portal, PortalBackdrop } from '@/components/portal';
 import { useScroll } from '@/hooks/use-scroll';
 import { cn } from '@/lib/utils';
+import { AnimatedThemeToggler } from '@/components/landing/animated-theme-toggler';
+
+/** Nav-bar theme toggle: MagicUI's view-transition reveal, driven by next-themes. */
+const themeToggleClass = cn(
+	'inline-flex size-9 shrink-0 items-center justify-center rounded-lg',
+	'text-[var(--landing-foreground)] cursor-pointer transition-colors duration-150',
+	'hover:bg-[color-mix(in_srgb,var(--landing-foreground)_8%,transparent)]',
+	'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#27a9e1]',
+	'[&_svg]:size-[18px]',
+);
 
 gsap.registerPlugin(useGSAP);
 
@@ -43,17 +54,7 @@ const NAV: NavEntry[] = [
 			{ meta: '04', title: 'Role management', description: 'Grant granular permissions to staff.', href: '/docs/api/role-management/' },
 		],
 	},
-	{
-		key: 'blog',
-		label: 'Blog',
-		href: '/blog',
-		cards: [
-			{ meta: '01', title: 'CtrlPanel 1.2.0 is here!', description: 'What shipped in the latest panel release.', href: '/blog/1.2.0-release/' },
-			{ meta: '02', title: 'Understanding MPL 2.0', description: 'How licensing works for CtrlPanel.', href: '/blog/understanding-mpl-2.0/' },
-			{ meta: '03', title: 'Authors', description: 'The people writing about CtrlPanel.', href: '/blog/authors/' },
-			{ meta: '04', title: 'All posts', description: 'Every release note and guide.', href: '/blog/' },
-		],
-	},
+	{ key: 'blog', label: 'Blog', href: '/blog' },
 	{ key: 'market', label: 'Extensions', href: 'https://market.ctrlpanel.gg', external: true },
 	{ key: 'discord', label: 'Discord', href: 'https://discord.gg/ctrlpanel-gg-787829714483019826', external: true },
 ];
@@ -113,6 +114,7 @@ function CardLink({ card, onNavigate }: { card: Card; onNavigate: () => void }) 
 
 export function SiteNav() {
 	const { navItems, slots } = useHomeLayout();
+	const { resolvedTheme, setTheme } = useTheme();
 	const root = useRef<HTMLElement>(null);
 	const wrap = useRef<HTMLDivElement>(null);
 	const list = useRef<HTMLUListElement>(null);
@@ -294,7 +296,7 @@ export function SiteNav() {
 									<Link href={entry.href} className={linkClass} aria-haspopup="true" aria-expanded={openKey === entry.key} aria-controls={popupId}
 										onPointerEnter={event => { movePill(event.currentTarget); cancelClose(); openPanel(event.currentTarget, index); }}
 										onFocus={event => { movePill(event.currentTarget); openPanel(event.currentTarget, index); }}>
-										{entry.label}<span className="text-[9px] leading-none opacity-70 transition-transform duration-200 group-aria-expanded:rotate-180" aria-hidden="true">▾</span>
+										{entry.label}<ChevronDown aria-hidden="true" className="size-3 shrink-0 opacity-70 transition-transform duration-200 group-aria-expanded:rotate-180" />
 									</Link>
 								) : (
 									<SmartLink href={entry.href} className={linkClass}
@@ -314,7 +316,12 @@ export function SiteNav() {
 								{...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
 								className="inline-flex items-center rounded-md p-2 text-fd-muted-foreground transition-colors hover:text-fd-foreground [&_svg]:size-[18px]">{item.icon}</SmartLink>
 						))}
-						{slots.themeSwitch && <slots.themeSwitch />}
+						<AnimatedThemeToggler
+							theme={resolvedTheme === 'light' ? 'light' : 'dark'}
+							onThemeChange={value => setTheme(value)}
+							aria-label="Toggle theme"
+							className={themeToggleClass}
+						/>
 						<button ref={burger} type="button" className="inline-flex size-9 items-center justify-center rounded-lg border-0 bg-transparent text-[var(--landing-foreground)] cursor-pointer [-webkit-tap-highlight-color:transparent] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#27a9e1] lg:hidden"
 							aria-expanded={mobileOpen} aria-controls={`${popupId}-mobile`}
 							onClick={() => setMobileOpen(value => !value)}>
@@ -369,7 +376,12 @@ export function SiteNav() {
 							{slots.searchTrigger && (
 								<slots.searchTrigger.full hideIfDisabled className="flex-1" />
 							)}
-							{slots.themeSwitch && <slots.themeSwitch />}
+							<AnimatedThemeToggler
+								theme={resolvedTheme === 'light' ? 'light' : 'dark'}
+								onThemeChange={value => setTheme(value)}
+								aria-label="Toggle theme"
+								className={themeToggleClass}
+							/>
 						</div>
 					</div>
 				</Portal>

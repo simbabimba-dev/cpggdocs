@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import { ArrowRight, ArrowUpRight, Terminal } from 'lucide-react';
-import { buttonVariants } from '@/components/ui/button';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { PillButtonContent } from '@/components/react-bits/PillButtonContent';
 import { GitHubStars } from '@/components/landing/github-stars';
 import { AsciiWordmark } from '@/components/landing/ascii-wordmark';
 import PatternWaves from '@/components/landing/pattern-waves';
@@ -10,15 +10,19 @@ import {
 	containerClass,
 	displayClass,
 	ledeClass,
-	panelClass,
 } from '@/components/landing/foundation';
+import { landingButtonClass, landingButtonSecondaryClass } from '@/components/landing/landing-styles';
 
 /**
  * P2 — hero + trust strip.
  *
- * The ASCII wordmark is the page's brand device and is spent here, once. It is
- * decorative (`aria-hidden` inside `AsciiWordmark`); the accessible page title is
- * the real `<h1>`. Everything else composes the `foundation.ts` primitives.
+ * The ASCII wordmark is the page's brand device and is spent here, once, bare on
+ * the page with no panel of its own. It is decorative (`aria-hidden` inside
+ * `AsciiWordmark`); the accessible page title is the real `<h1>`.
+ *
+ * The dot field sits behind everything and rises out of a wash of the page
+ * background under the navbar, then fades into the page. Actions use the
+ * landing pill buttons (`landing-styles.ts` + `PillButtonContent`).
  */
 
 const proof: Array<{ label: string; value: string }> = [
@@ -28,32 +32,18 @@ const proof: Array<{ label: string; value: string }> = [
 	{ label: 'License', value: 'MPL-2.0' },
 ];
 
-function BrandStrip() {
-	return (
-		<div className={cn(panelClass, 'overflow-hidden')}>
-			<div className="flex items-center gap-2 border-b border-fd-border px-4 py-2.5 sm:px-6">
-				<Terminal aria-hidden="true" className="size-3.5 text-fd-muted-foreground" />
-				<span className="font-mono text-xs text-fd-muted-foreground">ctrlpanel</span>
-				<span className="ml-auto text-xs text-fd-muted-foreground">self-hosted · MPL-2.0</span>
-			</div>
-			<div className="overflow-x-auto px-4 py-5 sm:px-6">
-				<AsciiWordmark />
-			</div>
-		</div>
-	);
-}
-
 export function Hero() {
 	return (
 		<section className="relative isolate overflow-hidden" aria-labelledby="hero-title">
-			<div className="pointer-events-none absolute inset-0 -z-10 opacity-50 md:opacity-100" aria-hidden="true">
+			{/* Pixel field, tall and veiled under the navbar so it rises out of the page. */}
+			<div className="pointer-events-none absolute inset-x-0 -top-px -z-10 h-[680px] md:h-[860px] lg:h-[1000px]" aria-hidden="true">
 				<PatternWaves
 					preset="silk"
 					color="#27a9e1"
 					backgroundColor="transparent"
 					opacity={0.72}
-					fade="edges"
-					fadeSize={0.62}
+					fade="bottom"
+					fadeSize={0.5}
 					spacing={10}
 					markSize={0.85}
 					depth={1}
@@ -62,36 +52,39 @@ export function Hero() {
 					speed={0.24}
 				/>
 			</div>
-			<div
-				className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-b from-transparent to-fd-background md:h-44"
-				aria-hidden="true"
-			/>
+			<div className="landing-hero-veil pointer-events-none absolute inset-x-0 top-0 -z-10 h-[clamp(220px,34vh,460px)]" aria-hidden="true" />
 
-			<div className={cn(containerClass, 'pt-10 pb-10 md:pt-14 md:pb-14 lg:pt-16 lg:pb-16')}>
+			<div className="w-full px-5 pt-12 pb-12 sm:px-8 md:pt-16 md:pb-16 lg:px-12 lg:pt-24 lg:pb-24">
 				<div className="flex flex-col gap-8 md:gap-10">
-					<BrandStrip />
+					<div className="overflow-x-auto">
+						<AsciiWordmark />
+					</div>
 
-					<div className="flex max-w-[46rem] flex-col gap-4">
-						<h1 id="hero-title" className={displayClass}>
+					<div className="flex max-w-[46rem] flex-col gap-5">
+						<h1 id="hero-title" className={cn(displayClass, 'max-w-[20ch]')}>
 							Free, open-source billing for Pterodactyl
 						</h1>
 						<p className={ledeClass}>
 							Clients buy servers from plans you define, pay by the hour or the year, and
 							manage themselves. You run the numbers from one console.
 						</p>
-						<div className={cn(actionRowClass, 'pt-2')}>
-							<Link href="/docs/getting-started/install/" className={buttonVariants({ variant: 'primary' })}>
-								<ArrowRight aria-hidden="true" className="size-4" />
-								<span>Install CtrlPanel</span>
+						<div className={cn(actionRowClass, 'pt-1')}>
+							<Link href="/docs/getting-started/install/" className={landingButtonClass}>
+								<PillButtonContent>
+									<ArrowRight aria-hidden="true" />
+									<span>Install CtrlPanel</span>
+								</PillButtonContent>
 							</Link>
 							<a
 								href="https://demo.ctrlpanel.gg"
 								target="_blank"
 								rel="noopener noreferrer"
-								className={buttonVariants({ variant: 'outline' })}
+								className={landingButtonSecondaryClass}
 							>
-								<ArrowUpRight aria-hidden="true" className="size-4" />
-								<span>Live demo</span>
+								<PillButtonContent>
+									<ArrowUpRight aria-hidden="true" />
+									<span>Live demo</span>
+								</PillButtonContent>
 							</a>
 							<GitHubStars />
 						</div>

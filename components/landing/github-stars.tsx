@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react';
 import { Star } from 'lucide-react';
 import snapshot from '@/lib/github-stars.json';
-import { buttonVariants } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { PillButtonContent } from '@/components/react-bits/PillButtonContent';
+import { landingStarButtonClass } from '@/components/landing/landing-styles';
 
-/** Live GitHub star count, styled with the same button as the rest of the page. */
+/** Live GitHub star count, on the outlined landing pill so the hero action row reads as one family. */
 export function GitHubStars() {
 	const [stars, setStars] = useState(snapshot.count);
 
@@ -31,16 +31,18 @@ export function GitHubStars() {
 			href="https://github.com/Ctrlpanel-gg/panel"
 			target="_blank"
 			rel="noopener noreferrer"
-			className={cn(buttonVariants({ variant: 'outline' }), 'group')}
+			className={landingStarButtonClass}
 		>
-			<Star aria-hidden="true" className="size-4" />
-			<span>Star on GitHub</span>
-			<span
-				className="ml-1 border-l border-fd-border pl-2 text-xs font-semibold tabular-nums text-fd-muted-foreground"
-				aria-label={`${stars.toLocaleString('en-US')} stars`}
-			>
-				{stars.toLocaleString('en-US')}
-			</span>
+			<PillButtonContent>
+				<Star aria-hidden="true" />
+				<span>Star on GitHub</span>
+				<span
+					className="ml-0.5 border-l border-[color-mix(in_srgb,currentColor_22%,transparent)] pl-3 text-xs font-semibold tabular-nums max-[480px]:pl-2.5"
+					aria-label={`${stars.toLocaleString('en-US')} stars`}
+				>
+					{stars.toLocaleString('en-US')}
+				</span>
+			</PillButtonContent>
 		</a>
 	);
 }

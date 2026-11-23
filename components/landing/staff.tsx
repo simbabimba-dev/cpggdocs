@@ -1,26 +1,15 @@
 import { Bell, ScrollText, ShieldCheck } from 'lucide-react';
 import { Section } from '@/components/landing/section';
-import { AccessMark, AppWindow, ListRow, Pill, uiLabelClass } from '@/components/landing/app-ui';
+import { Shot } from '@/components/landing/shot';
+import { AppWindow, ListRow, uiLabelClass } from '@/components/landing/app-ui';
 import { bodyClass, splitClass } from '@/components/landing/foundation';
 
 /**
  * P7 — Staff and permissions.
  *
- * Claim: run a team, not a solo account. Proof: a permission matrix drawn from
- * the real permission tree, the activity log it writes to, and broadcasts.
+ * Claim: run a team, not a solo account. Proof: the real role-management picture
+ * from the older site, the activity log it writes to, and broadcasts.
  */
-
-const roles = ['Support', 'Moderator', 'Admin'];
-
-const permissions = [
-	{ name: 'View users', grants: [true, true, true] },
-	{ name: 'Adjust credits', grants: [false, false, true] },
-	{ name: 'Read tickets', grants: [true, true, true] },
-	{ name: 'Reply to tickets', grants: [true, true, true] },
-	{ name: 'Manage products', grants: [false, true, true] },
-	{ name: 'View payments', grants: [false, true, true] },
-	{ name: 'Edit settings', grants: [false, false, true] },
-];
 
 const log = [
 	{ who: 'mia', what: 'adjusted credits for arun', when: '2m' },
@@ -55,46 +44,13 @@ export function Staff() {
 			lede="Roles are built from a permission tree, with role power and readable names. Every change is written to the activity log."
 		>
 			<div className={splitClass}>
-				<div data-reveal>
-					<AppWindow label="ctrlpanel / roles" right={<Pill>3 roles</Pill>} bodyClassName="p-0">
-						<table className="w-full border-collapse text-sm">
-							<caption className="sr-only">Example permission matrix for three staff roles</caption>
-							<thead>
-								<tr className="border-b border-fd-border text-left">
-									<th scope="col" className="px-3 py-2.5 text-[11px] font-medium text-fd-muted-foreground">
-										Permission
-									</th>
-									{roles.map(role => (
-										<th
-											key={role}
-											scope="col"
-											className="px-3 py-2.5 text-center text-[11px] font-medium text-fd-muted-foreground"
-										>
-											{role}
-										</th>
-									))}
-								</tr>
-							</thead>
-							<tbody>
-								{permissions.map(row => (
-									<tr key={row.name} className="border-b border-fd-border last:border-b-0">
-										<th scope="row" className="px-3 py-2.5 text-left font-normal text-fd-foreground">
-											{row.name}
-										</th>
-										{row.grants.map((granted, index) => (
-											<td key={roles[index]} className="px-3 py-2.5 text-center">
-												<AccessMark
-													allowed={granted}
-													label={`${row.name} for ${roles[index]}: ${granted ? 'allowed' : 'not allowed'}`}
-												/>
-											</td>
-										))}
-									</tr>
-								))}
-							</tbody>
-						</table>
-					</AppWindow>
-				</div>
+				<Shot
+					src="/img/panel-permissions.svg"
+					alt="CtrlPanel role management: a permission tree with the grants each staff role receives"
+					width={28404}
+					height={14638}
+					caption="Roles are built from the panel’s own permission tree — not a single admin flag."
+				/>
 
 				<div className="flex flex-col gap-6" data-reveal>
 					<p className={bodyClass}>
